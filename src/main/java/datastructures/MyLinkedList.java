@@ -2,11 +2,18 @@ package datastructures;
 
 import datastructures.interfaces.LinkedListADT;
 
+/**
+ * Sun Kit's personal implementation of a singly linked list
+ * @param <E> the type of elements stored in linked list
+ * @implNote By storing a pointer to the tail node, adding to and removing tail of
+ *           linked list has O(1) time complexity
+ */
 public class MyLinkedList<E> implements LinkedListADT<E> {
 
     private Node<E> head;
+
     private Node<E> tail;
-    private int size = 0;
+    private long size = 0;
 
     private static class Node<E> {
         E data;
@@ -17,6 +24,10 @@ public class MyLinkedList<E> implements LinkedListADT<E> {
             this.next = next;
         }
 
+        @Override
+        public String toString() {
+            return "{Node: data=" + this.data + ", next=" + this.next + "}";
+        }
     }
 
     public MyLinkedList() {
@@ -27,14 +38,13 @@ public class MyLinkedList<E> implements LinkedListADT<E> {
             head = new Node<E>(data, null);
             tail = head;
         } else {
-            Node<E> newNode = new Node<>(data, null);
-            tail.next = newNode;
-            tail = newNode;
+            tail.next = new Node<>(data, null);;
+            tail = tail.next;
         }
         this.size++;
     }
 
-    public void add(int index, E data) {
+    public void add(long index, E data) {
 
         if (head == null && index > this.size) {
             throw new IndexOutOfBoundsException("Index " + index + " is greater than length of MyLinkedList " + this.size);
@@ -43,28 +53,31 @@ public class MyLinkedList<E> implements LinkedListADT<E> {
         if (index == 0) {
             head = new Node<>(data, head);
             tail = head;
+            this.size++;
             return;
         }
 
         Node<E> itr = this.head;
-        int i = 0;
+        long i = 0;
         while (itr != null) {
             if (i == index - 1) {
                 Node<E> temp = itr.next;
                 itr.next = new Node<>(data, temp);
+                this.size++;
                 return;
             }
             itr = itr.next;
+            i++;
         }
     }
 
-    public E get(int index) {
+    public E get(long index) {
         if (index > this.size) {
             throw new IndexOutOfBoundsException("Index " + index + " is greater than length of MyLinkedList " + this.size);
         }
 
         Node<E> itr = head;
-        int i = 0;
+        long i = 0;
         while (itr != null) {
             if (i == index) {
                 return itr.data;
@@ -75,27 +88,41 @@ public class MyLinkedList<E> implements LinkedListADT<E> {
         return null;
     }
 
-    public void remove(int index) {
+    public void remove(long index) {
         if (index > this.size) {
             throw new IndexOutOfBoundsException("Index " + index + " is greater than length of MyLinkedList " + this.size);
         }
 
+        // case for removing head node
         if (index == 0) {
             head = head.next;
             this.size--;
             return;
         }
+
+        // iterate through linked list until target index
         Node<E> itr = head;
-        int i = 0;
+        long i = 0;
         while (itr != null) {
             if (i == index - 1) {
+                // remove node at target index
                 itr.next = itr.next.next;
+                // check if removing tail node
+                if (index == this.size - 1) {
+                    // reassign tail node
+                    tail = itr;
+                }
+                // decrement size field accordingly
                 this.size--;
                 return;
             }
             itr = itr.next;
             i++;
         }
+    }
+
+    public long size() {
+        return this.size;
     }
 
     @Override
@@ -109,4 +136,20 @@ public class MyLinkedList<E> implements LinkedListADT<E> {
         result.append("]");
         return result.toString();
     }
+
+    public void removeTailByIterating() {
+        Node<E> itr = head;
+        long i = 0;
+        while (itr != null) {
+            if (i == this.size - 2) {
+                itr.next = itr.next.next;
+                tail = itr;
+                this.size--;
+                return;
+            }
+            itr = itr.next;
+            i++;
+        }
+    }
+
 }
