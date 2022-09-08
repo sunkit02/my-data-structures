@@ -21,6 +21,7 @@ public class MyStack<E> implements StackADT<E> {
      * Creates an instance of {@code MyStack} with {@code initialCapacity} of 10
      * and default {@code minimumCapacity} of 10;
      */
+    @SuppressWarnings("unchecked")
     public MyStack() {
         elementArray = (E[]) new Object[10];
         topIndex = -1;
@@ -31,6 +32,7 @@ public class MyStack<E> implements StackADT<E> {
      * @param initialCapacity custom {@code initialCapacity} desired
      * @untested
      */
+    @SuppressWarnings("unchecked")
     public MyStack(int initialCapacity) {
         elementArray = (E[]) new Object[initialCapacity];
         topIndex = -1;
@@ -44,6 +46,7 @@ public class MyStack<E> implements StackADT<E> {
      *                                  {@code initialCapacity} is less than 1
      * @untested
      */
+    @SuppressWarnings("unchecked")
     public MyStack(int initialCapacity, int minimumCapacity) {
         if (initialCapacity < 1) {
             throw new IllegalArgumentException("Initial capacity must be at least 1");
@@ -96,6 +99,7 @@ public class MyStack<E> implements StackADT<E> {
      * Removes all elements in current stack by pointing the reference of
      * {@code elementArray} to a new, empty array with {@code MIN_CAPACITY}
      */
+    @SuppressWarnings("unchecked")
     public void clear() {
         elementArray = (E[]) new Object[minCapacity];
         topIndex = -1;
@@ -134,6 +138,7 @@ public class MyStack<E> implements StackADT<E> {
      *           and {@code newArrayLength} is less than or equal to 10, any element with
      *           index of 10 and greater will be ignored.
      */
+    @SuppressWarnings("unchecked")
     private void copyArray(int newArrayLength) {
         // copy stack to an array with new length
         // if new length is less than MIN_CAPACITY of 10 then new length is 10
