@@ -1,6 +1,6 @@
 package datastructures;
 
-import datastructures.interfaces.LinkedListADT;
+import datastructures.interfaces.LinkedList;
 
 /**
  * Sun Kit's personal implementation of a singly linked list
@@ -8,7 +8,7 @@ import datastructures.interfaces.LinkedListADT;
  * @implNote By storing a pointer to the tail node, adding to and removing tail of
  *           linked list has O(1) time complexity
  */
-public class MyLinkedList<E> implements LinkedListADT<E> {
+public class MyLinkedList<E> implements LinkedList<E> {
 
     private Node<E> head;
 
@@ -35,10 +35,10 @@ public class MyLinkedList<E> implements LinkedListADT<E> {
 
     public void add(E data) {
         if (head == null) {
-            head = new Node<E>(data, null);
+            head = new Node<>(data, null);
             tail = head;
         } else {
-            tail.next = new Node<>(data, null);;
+            tail.next = new Node<>(data, null);
             tail = tail.next;
         }
         this.size++;
@@ -136,20 +136,4 @@ public class MyLinkedList<E> implements LinkedListADT<E> {
         result.append("]");
         return result.toString();
     }
-
-    public void removeTailByIterating() {
-        Node<E> itr = head;
-        long i = 0;
-        while (itr != null) {
-            if (i == this.size - 2) {
-                itr.next = itr.next.next;
-                tail = itr;
-                this.size--;
-                return;
-            }
-            itr = itr.next;
-            i++;
-        }
-    }
-
 }
