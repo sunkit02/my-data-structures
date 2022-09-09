@@ -9,13 +9,13 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MyLinkedListTest {
+class MySinglyLinkedListTest {
 
-    MyLinkedList<Integer> underTest;
+    MySinglyLinkedList<Integer> underTest;
 
     @BeforeEach
     void setUp() {
-        underTest = new MyLinkedList<>();
+        underTest = new MySinglyLinkedList<>();
     }
 
     @Test

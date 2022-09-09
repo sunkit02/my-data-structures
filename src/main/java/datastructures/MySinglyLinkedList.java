@@ -8,7 +8,7 @@ import datastructures.interfaces.LinkedList;
  * @implNote By storing a pointer to the tail node, adding to and removing tail of
  *           linked list has O(1) time complexity
  */
-public class MyLinkedList<E> implements LinkedList<E> {
+public class MySinglyLinkedList<E> implements LinkedList<E> {
 
     private Node<E> head;
 
@@ -30,7 +30,7 @@ public class MyLinkedList<E> implements LinkedList<E> {
         }
     }
 
-    public MyLinkedList() {
+    public MySinglyLinkedList() {
     }
 
     public void add(E data) {
