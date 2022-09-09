@@ -1,6 +1,6 @@
 package datastructures;
 
-import datastructures.interfaces.StackADT;
+import datastructures.interfaces.Stack;
 
 /**
  * Sun Kit's implementation of a stack using techniques in java.util.ArrayList
@@ -10,7 +10,7 @@ import datastructures.interfaces.StackADT;
  * @version 1.0
  * @param <E> type of object the stack will be holding
  */
-public class MyStack<E> implements StackADT<E> {
+public class MyStack<E> implements Stack<E> {
     private E[] elementArray;
     private int topIndex;
 

@@ -1,10 +1,10 @@
 package datastructures;
 
-import datastructures.interfaces.StackADT;
+import datastructures.interfaces.Stack;
 
 import java.util.Arrays;
 
-public class MyDropOutStack<E> implements StackADT<E> {
+public class MyDropOutStack<E> implements Stack<E> {
     E[] elementArray;
     int topIndex = -1;
     int capacity = 10;
