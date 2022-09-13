@@ -4,9 +4,10 @@ import datastructures.interfaces.LinkedList;
 
 /**
  * Sun Kit's personal implementation of a singly linked list
+ *
  * @param <E> the type of elements stored in linked list
  * @implNote By storing a pointer to the tail node, adding to and removing tail of
- *           linked list has O(1) time complexity
+ * linked list has O(1) time complexity
  */
 public class MySinglyLinkedList<E> implements LinkedList<E> {
 
@@ -14,21 +15,6 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
 
     private Node<E> tail;
     private long size = 0;
-
-    private static class Node<E> {
-        E data;
-        Node<E> next;
-
-        public Node(E data, Node<E> next) {
-            this.data = data;
-            this.next = next;
-        }
-
-        @Override
-        public String toString() {
-            return "{Node: data=" + this.data + ", next=" + this.next + "}";
-        }
-    }
 
     public MySinglyLinkedList() {
     }
@@ -135,5 +121,20 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
         }
         result.append("]");
         return result.toString();
+    }
+
+    private static class Node<E> {
+        E data;
+        Node<E> next;
+
+        public Node(E data, Node<E> next) {
+            this.data = data;
+            this.next = next;
+        }
+
+        @Override
+        public String toString() {
+            return "{Node: data=" + this.data + ", next=" + this.next + "}";
+        }
     }
 }
