@@ -41,10 +41,14 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
 
         // adding to the front
         if (index == 0) {
-            Node<E> newNode = new Node<>(null, data, head);
-            head.last = newNode;
-            head = newNode;
-            this.size++;
+            if (head == null) {
+                add(data);
+            } else {
+                Node<E> newNode = new Node<>(null, data, head);
+                head.last = newNode;
+                head = newNode;
+                this.size++;
+            }
         }
         // adding to the end
         else if (index == size) {
@@ -58,8 +62,8 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
             Node<E> itr = head;
             long i = 0;
             while (itr != null) {
-                if (i == index) {
-                    Node<E> newNode = new Node<>(itr.last, data, itr);
+                if (i == index - 1) {
+                    Node<E> newNode = new Node<>(itr, data, itr.next);
                     itr.next.last = newNode;
                     itr.next = newNode;
                     this.size++;
