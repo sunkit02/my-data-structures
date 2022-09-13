@@ -33,7 +33,10 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
     public void add(long index, E data) {
 
         if (head == null && index > this.size) {
-            throw new IndexOutOfBoundsException("Index " + index + " is greater than length of MyLinkedList " + this.size);
+            throw new IndexOutOfBoundsException(String.format(
+                    "Index: %d, LastIndex: %d%n",
+                    index, this.size-1
+            ));
         }
 
         if (index == 0) {
@@ -58,8 +61,11 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
     }
 
     public E get(long index) {
-        if (index > this.size) {
-            throw new IndexOutOfBoundsException("Index " + index + " is greater than length of MyLinkedList " + this.size);
+        if (index >= this.size) {
+            throw new IndexOutOfBoundsException(String.format(
+                    "Index: %d, LastIndex: %d%n",
+                    index, this.size-1
+            ));
         }
 
         Node<E> itr = head;
@@ -76,7 +82,10 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
 
     public void remove(long index) {
         if (index > this.size) {
-            throw new IndexOutOfBoundsException("Index " + index + " is greater than length of MyLinkedList " + this.size);
+            throw new IndexOutOfBoundsException(String.format(
+                    "Index: %d, LastIndex: %d%n",
+                    index, this.size-1
+            ));
         }
 
         // case for removing head node
