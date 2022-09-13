@@ -77,7 +77,36 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
 
     @Override
     public E get(long index) {
-        return null;
+        if (index >= size) {
+            throw new IndexOutOfBoundsException(String.format(
+                    "Index: %d, Size: %d%n",
+                    index, this.size
+            ));
+        }
+        E data = null;
+        // get head
+        if (index == 0) {
+            data = head.data;
+        }
+        // get tail
+        else if (index == this.size - 1) {
+            data = tail.data;
+        }
+        // get middle nodes
+        else {
+            Node<E> itr = head;
+            long i = 0;
+            while (itr != null) {
+                if (i == index) {
+                    data = itr.data;
+                    break;
+                }
+                itr = itr.next;
+                i++;
+            }
+        }
+
+        return data;
     }
 
     @Override
