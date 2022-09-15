@@ -77,6 +77,7 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
 
     @Override
     public E get(long index) {
+        // TODO: implement backwards search for index > size >> 1 (size/2)
         if (index >= size) {
             throw new IndexOutOfBoundsException(String.format(
                     "Index: %d, Size: %d%n",
@@ -105,13 +106,41 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
                 i++;
             }
         }
-
         return data;
     }
 
     @Override
     public void remove(long index) {
+        if (index >= size) {
+            throw new IndexOutOfBoundsException(String.format(
+                    "Index: %d, Size: %d%n",
+                    index, this.size
+            ));
+        }
 
+        Node<E> itr = head;
+        long i = 0;
+        while (itr != null) {
+            if (i == index) {
+                if (itr.last != null) {
+                    itr.last.next = itr.next;
+                }
+                if (itr.next != null) {
+                    itr.next.last = itr.last;
+                }
+                // removing head
+                if (i == 0) {
+                    head = itr.next;
+                }
+
+                itr.next = null;
+                itr.last = null;
+                this.size--;
+                break;
+            }
+            itr = itr.next;
+            i++;
+        }
     }
 
     @Override
@@ -124,11 +153,10 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
         StringBuilder str = new StringBuilder("[");
         Node<E> itr = head;
         while (itr != null) {
-            str.append(itr.data).append(", ");
+            str.append(itr.data);
+            if (itr.next != null) str.append(", ");
             itr = itr.next;
         }
-        str.deleteCharAt(str.length()-2);
-        str.deleteCharAt(str.length()-1);
         str.append(']');
         return str.toString();
     }
