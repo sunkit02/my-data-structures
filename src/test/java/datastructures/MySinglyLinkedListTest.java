@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MySinglyLinkedListTest {
 
@@ -56,6 +58,17 @@ class MySinglyLinkedListTest {
     }
 
     @Test
+    void canGetIsEmpty() {
+        // given
+        boolean isEmptyBefore = underTest.isEmpty();
+        underTest.add(1);
+        boolean isNotEmptyAfter = underTest.isEmpty();
+        // then
+        assertThat(isEmptyBefore).isTrue();
+        assertThat(isNotEmptyAfter).isFalse();
+    }
+
+    @Test
     void canAddElementInMiddleByIndex() {
         // given
         int testValue = 10;
@@ -95,5 +108,115 @@ class MySinglyLinkedListTest {
 
         // then
         assertThat(extractedValues).isEqualTo(testValues);
+    }
+
+    @Test
+    void canThrowIndexOutOfBoundsExceptionWhenAdding() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4, 5);
+        values.forEach(val -> underTest.add(val));
+
+        // when
+        int maxIndex = underTest.size();
+        int minIndex = 0;
+        Integer randomElement = 6;
+
+        // then
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> underTest.add(maxIndex + 1, randomElement)
+        );
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> underTest.add(minIndex - 1, randomElement)
+        );
+    }
+
+    @Test
+    void canNotThrowIndexOutOfBoundsExceptionWhenAdding() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4, 5);
+        values.forEach(val -> underTest.add(val));
+
+        // when
+        int maxIndex = underTest.size();
+        int minIndex = 0;
+        Integer randomElement = 6;
+
+        // then
+
+        assertDoesNotThrow(() -> underTest.add(maxIndex, randomElement)
+        );
+        assertDoesNotThrow(() -> underTest.add(minIndex, randomElement));
+    }
+
+    @Test
+    void canThrowIndexOutOfBoundsExceptionWhenGetting() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4, 5);
+        values.forEach(val -> underTest.add(val));
+
+        // when
+        int maxIndex = underTest.size() - 1;
+        int minIndex = 0;
+
+        // then
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> underTest.get(maxIndex + 1)
+        );
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> underTest.get(minIndex - 1)
+        );
+    }
+
+    @Test
+    void canNotThrowIndexOutOfBoundsExceptionWhenGetting() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4, 5);
+        values.forEach(val -> underTest.add(val));
+
+        // when
+        int maxIndex = underTest.size() - 1;
+        int minIndex = 0;
+
+        // then
+
+        assertDoesNotThrow(() -> underTest.get(maxIndex)
+        );
+        assertDoesNotThrow(() -> underTest.get(minIndex));
+    }
+
+    @Test
+    void canThrowIndexOutOfBoundsExceptionWhenRemoving() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4, 5);
+        values.forEach(val -> underTest.add(val));
+
+        // when
+        int maxIndex = underTest.size() - 1;
+        int minIndex = 0;
+
+        // then
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> underTest.remove(maxIndex + 1)
+        );
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> underTest.remove(minIndex - 1)
+        );
+    }
+
+    @Test
+    void canNotThrowIndexOutOfBoundsExceptionWhenRemoving() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4, 5);
+        values.forEach(val -> underTest.add(val));
+
+        // when
+        int maxIndex = underTest.size() - 1;
+        int minIndex = 0;
+
+        // then
+        assertDoesNotThrow(() -> underTest.remove(maxIndex)
+        );
+        assertDoesNotThrow(() -> underTest.remove(minIndex)
+        );
     }
 }
