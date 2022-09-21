@@ -24,14 +24,14 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
     }
 
     /**
-     * Insert new data at the indicated index and push
+     * Insert new element at the indicated index and push
      * everything behind it one index down
      *
      * @param index target index
-     * @param data  new data
+     * @param element  new element
      */
     @Override
-    public void add(int index, E data) {
+    public void add(int index, E element) {
         if (index < 0 || index > this.size) {
             throw new IndexOutOfBoundsException(
                     String.format(
@@ -42,9 +42,9 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
         // adding to the front
         if (index == 0) {
             if (head == null) {
-                add(data);
+                add(element);
             } else {
-                Node<E> newNode = new Node<>(null, data, head);
+                Node<E> newNode = new Node<>(null, element, head);
                 head.last = newNode;
                 head = newNode;
                 this.size++;
@@ -52,7 +52,7 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
         }
         // adding to the end
         else if (index == size) {
-            Node<E> newNode = new Node<>(tail, data, null);
+            Node<E> newNode = new Node<>(tail, element, null);
             tail.next = newNode;
             tail = newNode;
             this.size++;
@@ -63,7 +63,7 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
             long i = 0;
             while (itr != null) {
                 if (i == index - 1) {
-                    Node<E> newNode = new Node<>(itr, data, itr.next);
+                    Node<E> newNode = new Node<>(itr, element, itr.next);
                     itr.next.last = newNode;
                     itr.next = newNode;
                     this.size++;
@@ -78,7 +78,7 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
     @Override
     public E get(int index) {
         // TODO: implement backwards search for index > size >> 1 (size/2)
-        if (index >= size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException(String.format(
                     "Index: %d, Size: %d%n",
                     index, this.size
@@ -111,7 +111,7 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
 
     @Override
     public void remove(int index) {
-        if (index >= size) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException(String.format(
                     "Index: %d, Size: %d%n",
                     index, this.size
@@ -146,6 +146,11 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
     @Override
     public int size() {
         return this.size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     @Override

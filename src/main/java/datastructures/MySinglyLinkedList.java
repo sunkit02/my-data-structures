@@ -19,28 +19,29 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
     public MySinglyLinkedList() {
     }
 
-    public void add(E data) {
+    public void add(E element) {
         if (head == null) {
-            head = new Node<>(data, null);
+            head = new Node<>(element, null);
             tail = head;
         } else {
-            tail.next = new Node<>(data, null);
+            tail.next = new Node<>(element, null);
             tail = tail.next;
         }
         this.size++;
     }
 
-    public void add(int index, E data) {
+    public void add(int index, E element) {
 
-        if (head == null && index > this.size) {
+        if (index < 0 || index > this.size) {
             throw new IndexOutOfBoundsException(String.format(
                     "Index: %d, LastIndex: %d%n",
                     index, this.size-1
             ));
         }
 
+        // fix logic for adding to the head of linked list
         if (index == 0) {
-            head = new Node<>(data, head);
+            head = new Node<>(element, head);
             tail = head;
             this.size++;
             return;
@@ -51,7 +52,7 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
         while (itr != null) {
             if (i == index - 1) {
                 Node<E> temp = itr.next;
-                itr.next = new Node<>(data, temp);
+                itr.next = new Node<>(element, temp);
                 this.size++;
                 return;
             }
@@ -61,7 +62,7 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
     }
 
     public E get(int index) {
-        if (index >= this.size) {
+        if (index < 0 || index >= this.size) {
             throw new IndexOutOfBoundsException(String.format(
                     "Index: %d, LastIndex: %d%n",
                     index, this.size-1
@@ -82,7 +83,7 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
 
     public void remove(int index) {
         // TODO: fix memory leak
-        if (index > this.size) {
+        if (index < 0 || index >= this.size) {
             throw new IndexOutOfBoundsException(String.format(
                     "Index: %d, LastIndex: %d%n",
                     index, this.size-1
@@ -119,6 +120,11 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
 
     public int size() {
         return this.size;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return size == 0;
     }
 
     @Override
