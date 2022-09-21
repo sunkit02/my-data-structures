@@ -6,5 +6,6 @@ public interface LinkedList<E> {
     E get(int index);
     void remove(int index);
     int size();
+    boolean isEmpty();
     String toString();
 }
