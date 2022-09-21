@@ -14,7 +14,7 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
     private Node<E> head;
 
     private Node<E> tail;
-    private long size = 0;
+    private int size = 0;
 
     public MySinglyLinkedList() {
     }
@@ -30,7 +30,7 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
         this.size++;
     }
 
-    public void add(long index, E data) {
+    public void add(int index, E data) {
 
         if (head == null && index > this.size) {
             throw new IndexOutOfBoundsException(String.format(
@@ -47,7 +47,7 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
         }
 
         Node<E> itr = this.head;
-        long i = 0;
+        int i = 0;
         while (itr != null) {
             if (i == index - 1) {
                 Node<E> temp = itr.next;
@@ -60,7 +60,7 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
         }
     }
 
-    public E get(long index) {
+    public E get(int index) {
         if (index >= this.size) {
             throw new IndexOutOfBoundsException(String.format(
                     "Index: %d, LastIndex: %d%n",
@@ -69,7 +69,7 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
         }
 
         Node<E> itr = head;
-        long i = 0;
+        int i = 0;
         while (itr != null) {
             if (i == index) {
                 return itr.data;
@@ -80,7 +80,8 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
         return null;
     }
 
-    public void remove(long index) {
+    public void remove(int index) {
+        // TODO: fix memory leak
         if (index > this.size) {
             throw new IndexOutOfBoundsException(String.format(
                     "Index: %d, LastIndex: %d%n",
@@ -97,7 +98,7 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
 
         // iterate through linked list until target index
         Node<E> itr = head;
-        long i = 0;
+        int i = 0;
         while (itr != null) {
             if (i == index - 1) {
                 // remove node at target index
@@ -116,7 +117,7 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
         }
     }
 
-    public long size() {
+    public int size() {
         return this.size;
     }
 

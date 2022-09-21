@@ -21,15 +21,15 @@ class MySinglyLinkedListTest {
     @Test
     void canAddAndGetElements() {
         // given
-        List<Integer> testValues = List.of(1, 2, 3);
-        testValues.forEach(num -> underTest.add(num));
+        List<Integer> origVals = List.of(1, 2, 3);
+        origVals.forEach(val -> underTest.add(val));
         // when
         List<Integer> extractedValues = new ArrayList<>();
-        for (int i = 0; i < testValues.size(); i++) {
+        for (int i = 0; i < origVals.size(); i++) {
             extractedValues.add(underTest.get(i));
         }
         // then
-        assertThat(extractedValues).isEqualTo(testValues);
+        assertThat(extractedValues).isEqualTo(origVals);
     }
 
     @Test

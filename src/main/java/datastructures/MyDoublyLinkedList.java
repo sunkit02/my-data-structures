@@ -5,7 +5,7 @@ import datastructures.interfaces.LinkedList;
 public class MyDoublyLinkedList<E> implements LinkedList<E> {
     private Node<E> head;
     private Node<E> tail;
-    private long size = 0;
+    private int size = 0;
 
     /**
      * Add new data to the end of the linked list
@@ -31,7 +31,7 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
      * @param data  new data
      */
     @Override
-    public void add(long index, E data) {
+    public void add(int index, E data) {
         if (index < 0 || index > this.size) {
             throw new IndexOutOfBoundsException(
                     String.format(
@@ -76,7 +76,7 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
     }
 
     @Override
-    public E get(long index) {
+    public E get(int index) {
         // TODO: implement backwards search for index > size >> 1 (size/2)
         if (index >= size) {
             throw new IndexOutOfBoundsException(String.format(
@@ -110,7 +110,7 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
     }
 
     @Override
-    public void remove(long index) {
+    public void remove(int index) {
         if (index >= size) {
             throw new IndexOutOfBoundsException(String.format(
                     "Index: %d, Size: %d%n",
@@ -119,7 +119,7 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
         }
 
         Node<E> itr = head;
-        long i = 0;
+        int i = 0;
         while (itr != null) {
             if (i == index) {
                 if (itr.last != null) {
@@ -144,7 +144,7 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
     }
 
     @Override
-    public long size() {
+    public int size() {
         return this.size;
     }
 

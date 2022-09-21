@@ -233,16 +233,16 @@ class MyDoublyLinkedListTest {
             vals.add(i);
             underTest.add(i);
         }
-        long expectedSizeAfterAdding = vals.size();
-        long actualSizeAfterAdding = underTest.size();
+        int expectedSizeAfterAdding = vals.size();
+        int actualSizeAfterAdding = underTest.size();
 
         int numberOfValuesToRemove = 5;
         for (int i = 0; i < numberOfValuesToRemove; i++) {
             vals.remove(0);
             underTest.remove(0);
         }
-        long expectedSizeAfterRemoving = vals.size();
-        long actualSizeAfterRemoving = underTest.size();
+        int expectedSizeAfterRemoving = vals.size();
+        int actualSizeAfterRemoving = underTest.size();
 
         // then
         assertThat(actualSizeAfterAdding).isEqualTo(expectedSizeAfterAdding);
@@ -253,7 +253,7 @@ class MyDoublyLinkedListTest {
             MyDoublyLinkedList<Integer> underTest) {
         // track original end of lists
         int origValsLastIndex = origVals.size();
-        long underTestLastIndex = underTest.size();
+        int underTestLastIndex = underTest.size();
         // add elements
         for (int i = 10; i < 20; i++) {
             origVals.add(i);
