@@ -1,6 +1,6 @@
 package datastructures;
 
-import datastructures.interfaces.CircularIterator;
+import datastructures.interfaces.LinkedListIterator;
 import datastructures.interfaces.LinkedList;
 
 /**
@@ -234,24 +234,6 @@ public class MyCircularLinkedList<E> implements LinkedList<E> {
         return size;
     }
 
-    /**
-     * Return node in linked list at the indicated index
-     * @param index index of node
-     * @return node at index
-     */
-    Node<E> node(int index) {
-        return new Node<>(null, null, null);
-    }
-
-    private void isValidIndex(int index) {
-        throw new IndexOutOfBoundsException();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
     @Override
     public String toString() {
         StringBuilder str = new StringBuilder("[");
@@ -267,47 +249,95 @@ public class MyCircularLinkedList<E> implements LinkedList<E> {
         return str.toString();
     }
 
-    public CircularIterator<E> listIterator(int index) {
-        return new ListItr(0);
+    /**
+     * Return node in linked list at the indicated index
+     * @param index index of node
+     * @return node at index
+     */
+    Node<E> node(int index) {
+        return new Node<>(null, null, null);
     }
 
-    private class ListItr implements CircularIterator<E> {
+    private void validateIndex(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException(
+                    String.format("Index: %d, Size: %d%n",
+                                    index, size));
+        }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o instanceof MyCircularLinkedList<?> other
+                && other.size() == this.size) {
+                LinkedListIterator<?> otherItr = other.listIterator(0);
+                LinkedListIterator<E> thisItr = this.listIterator(0);
+                for (int i = 0; i < this.size; i++) {
+                    if (otherItr.next() != thisItr.next())
+                        return false;
+                }
+        } else {
+            return false;
+        }
+        return true;
+    }
+
+    public LinkedListIterator<E> listIterator(int index) {
+        validateIndex(index);
+        return new CircListItr(index);
+    }
+
+    private class CircListItr implements LinkedListIterator<E> {
         private Node<E> lastReturned;
         private Node<E> next;
         private int nextIndex;
 
-        ListItr(int index) {
-
+        private CircListItr(int index) {
+            next = iterateUntil(index);
+            nextIndex = index;
         }
 
         @Override
         public boolean hasNext() {
-            return false;
+            return next.next != null;
         }
 
         @Override
         public E next() {
-            return null;
+            Node<E> current = this.next;
+            this.next = this.next.next;
+            nextIndex++;
+            return current.data;
         }
 
         @Override
         public boolean hasPrevious() {
-            return false;
+            return next.prev != null;
         }
 
+        /**
+         * Returns the precious element in the linked list
+         * @return previous element
+         * @implNote initialize the {@link CircListItr} with the index 0
+         *           for the first element of this method to return to be
+         *           the arbitrary last element in the circular linked list
+         */
         @Override
         public E previous() {
-            return null;
+            Node<E> previous = next.prev;
+            this.next = this.next.prev;
+            nextIndex--;
+            return previous.data;
         }
 
         @Override
         public int nextIndex() {
-            return 0;
+            return nextIndex;
         }
 
         @Override
         public int previousIndex() {
-            return 0;
+            return nextIndex - 1;
         }
     }
 
