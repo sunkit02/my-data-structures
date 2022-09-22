@@ -218,10 +218,6 @@ class MyDoublyLinkedListTest {
         System.out.println();
     }
 
-    // TODO: can throw IndexOutOfBoundsException for add method
-    // TODO: can throw IndexOutOfBoundsException for get method
-    // TODO: can throw IndexOutOfBoundsException for remove method
-
     // management of the size field
     @Test
     void canGetSize() {
@@ -394,8 +390,6 @@ class MyDoublyLinkedListTest {
             origVals.add(i);
             underTest.add(i);
         }
-
-        // TODO: iterate through entire linked list (implement in future)
     }
 
     private List<Integer> extractValues(List<Integer> origVals) {
