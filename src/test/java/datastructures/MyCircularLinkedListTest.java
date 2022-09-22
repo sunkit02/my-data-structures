@@ -1,14 +1,17 @@
 package datastructures;
 
 import datastructures.interfaces.LinkedList;
+import datastructures.interfaces.LinkedListIterator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class MyCircularLinkedListTest {
     MyCircularLinkedList<Integer> underTest;
@@ -22,11 +25,11 @@ class MyCircularLinkedListTest {
     void canAddAndGetElements() {
         // given
         List<Integer> origVals = new ArrayList<>(List.of(1, 2, 3, 4, 5));
-        origVals.forEach(val -> underTest.add(val));
+        origVals.forEach(underTest::add);
 
         // when
         testPointer(origVals, underTest); // test pointer
-        List<Integer> extractedVals = extractValues(origVals);
+        List<Integer> extractedVals = extractValues(origVals.size());
 
         // then
         assertThat(extractedVals).isEqualTo(origVals);
@@ -43,7 +46,7 @@ class MyCircularLinkedListTest {
     void canAddToFrontByIndex() {
         // given
         List<Integer> origVals = new ArrayList<>(List.of(1, 2, 3, 4, 5));
-        origVals.forEach(val -> underTest.add(val));
+        origVals.forEach(underTest::add);
         int startIndex = 0;
         Integer newVal = 10;
         origVals.add(startIndex, newVal);
@@ -51,7 +54,7 @@ class MyCircularLinkedListTest {
 
         // when
         testPointer(origVals, underTest); // test pointer
-        List<Integer> extractedVals = extractValues(origVals);
+        List<Integer> extractedVals = extractValues(origVals.size());
 
         // then
         assertThat(extractedVals).isEqualTo(origVals);
@@ -68,7 +71,7 @@ class MyCircularLinkedListTest {
     void canAddToEndByIndex() {
         // given
         List<Integer> origVals = new ArrayList<>(List.of(1, 2, 3, 4, 5));
-        origVals.forEach(val -> underTest.add(val));
+        origVals.forEach(underTest::add);
         int endIndex = origVals.size();
         Integer newVal = 10;
         origVals.add(endIndex, newVal);
@@ -76,7 +79,7 @@ class MyCircularLinkedListTest {
 
         // when
         testPointer(origVals, underTest); // test pointer
-        List<Integer> extractedVals = extractValues(origVals);
+        List<Integer> extractedVals = extractValues(origVals.size());
 
         // then
         assertThat(extractedVals).isEqualTo(origVals);
@@ -93,7 +96,7 @@ class MyCircularLinkedListTest {
     void canAddToMiddleByIndex() {
         // given
         List<Integer> origVals = new ArrayList<>(List.of(1, 2, 3, 4, 5));
-        origVals.forEach(val -> underTest.add(val));
+        origVals.forEach(underTest::add);
         int middleIndex = origVals.size() / 2;
         Integer newVal = 10;
         origVals.add(middleIndex, newVal);
@@ -101,7 +104,7 @@ class MyCircularLinkedListTest {
 
         // when
         testPointer(origVals, underTest); // test pointer
-        List<Integer> extractedVals = extractValues(origVals);
+        List<Integer> extractedVals = extractValues(origVals.size());
 
 
         // then
@@ -124,7 +127,7 @@ class MyCircularLinkedListTest {
         // when
         underTest.add(0, origData);
         testPointer(origVals, underTest);
-        List<Integer> extractedVals = extractValues(origVals);
+        List<Integer> extractedVals = extractValues(origVals.size());
 
         // then
         assertThat(extractedVals).isEqualTo(origVals);
@@ -141,7 +144,7 @@ class MyCircularLinkedListTest {
     void canRemoveFromFrontByIndex() {
         // given
         List<Integer> origVals = new ArrayList<>(List.of(1, 2, 3, 4, 5));
-        origVals.forEach(val -> underTest.add(val));
+        origVals.forEach(underTest::add);
 
         // when
         for (int i = 0; i < 5; i++) {
@@ -151,7 +154,7 @@ class MyCircularLinkedListTest {
         }
 
         testPointer(origVals, underTest); // test pointer
-        List<Integer> extractedVals = extractValues(origVals);
+        List<Integer> extractedVals = extractValues(origVals.size());
 
         // then
         assertThat(extractedVals).isEqualTo(origVals);
@@ -168,7 +171,7 @@ class MyCircularLinkedListTest {
     void canRemoveFromBackByIndex() {
         // given
         List<Integer> origVals = new ArrayList<>(List.of(1, 2, 3, 4, 5));
-        origVals.forEach(val -> underTest.add(val));
+        origVals.forEach(underTest::add);
 
         // when
         for (int i = 0; i < 5; i++) {
@@ -178,7 +181,7 @@ class MyCircularLinkedListTest {
         }
 
         testPointer(origVals, underTest); // test pointer
-        List<Integer> extractedVals = extractValues(origVals);
+        List<Integer> extractedVals = extractValues(origVals.size());
 
         // then
         assertThat(extractedVals).isEqualTo(origVals);
@@ -195,7 +198,7 @@ class MyCircularLinkedListTest {
     void canRemoveFromMiddleByIndex() {
         // given
         List<Integer> origVals = new ArrayList<>(List.of(1, 2, 3, 4, 5));
-        origVals.forEach(val -> underTest.add(val));
+        origVals.forEach(underTest::add);
 
         // when
         for (int i = 0; i < 3; i++) {
@@ -205,7 +208,7 @@ class MyCircularLinkedListTest {
         }
 
         testPointer(origVals, underTest); // test pointer
-        List<Integer> extractedVals = extractValues(origVals);
+        List<Integer> extractedVals = extractValues(origVals.size());
 
         // then
         assertThat(extractedVals).isEqualTo(origVals);
@@ -221,7 +224,7 @@ class MyCircularLinkedListTest {
     void canThrowIndexOutOfBoundsExceptionWhenAdding() {
         // given
         List<Integer> values = List.of(1, 2, 3, 4, 5);
-        values.forEach(val -> underTest.add(val));
+        values.forEach(underTest::add);
 
         // when
         int maxIndex = underTest.size();
@@ -241,7 +244,7 @@ class MyCircularLinkedListTest {
     void canNotThrowIndexOutOfBoundsExceptionWhenAdding() {
         // given
         List<Integer> values = List.of(1, 2, 3, 4, 5);
-        values.forEach(val -> underTest.add(val));
+        values.forEach(underTest::add);
 
         // when
         int maxIndex = underTest.size();
@@ -259,7 +262,7 @@ class MyCircularLinkedListTest {
     void canThrowIndexOutOfBoundsExceptionWhenGetting() {
         // given
         List<Integer> values = List.of(1, 2, 3, 4, 5);
-        values.forEach(val -> underTest.add(val));
+        values.forEach(underTest::add);
 
         // when
         int maxIndex = underTest.size() - 1;
@@ -278,7 +281,7 @@ class MyCircularLinkedListTest {
     void canNotThrowIndexOutOfBoundsExceptionWhenGetting() {
         // given
         List<Integer> values = List.of(1, 2, 3, 4, 5);
-        values.forEach(val -> underTest.add(val));
+        values.forEach(underTest::add);
 
         // when
         int maxIndex = underTest.size() - 1;
@@ -295,7 +298,7 @@ class MyCircularLinkedListTest {
     void canThrowIndexOutOfBoundsExceptionWhenRemoving() {
         // given
         List<Integer> values = List.of(1, 2, 3, 4, 5);
-        values.forEach(val -> underTest.add(val));
+        values.forEach(underTest::add);
 
         // when
         int maxIndex = underTest.size() - 1;
@@ -314,7 +317,7 @@ class MyCircularLinkedListTest {
     void canNotThrowIndexOutOfBoundsExceptionWhenRemoving() {
         // given
         List<Integer> values = List.of(1, 2, 3, 4, 5);
-        values.forEach(val -> underTest.add(val));
+        values.forEach(underTest::add);
 
         // when
         int maxIndex = underTest.size() - 1;
@@ -327,12 +330,149 @@ class MyCircularLinkedListTest {
         );
     }
 
-    // management of the size field
+    @Test
+    void canValidateIndexWhenListIsNotEmpty() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4, 5);
+        values.forEach(underTest::add);
+
+        // when
+        int maxIndex = underTest.size() - 1;
+        int minIndex = 0;
+
+        // then
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> underTest.listIterator(maxIndex + 1));
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> underTest.listIterator(minIndex - 1));
+
+        assertDoesNotThrow(() -> underTest.listIterator(maxIndex));
+        assertDoesNotThrow(() -> underTest.listIterator(minIndex));
+    }
+
+    @Test
+    void canValidateIndexWhenListIsEmpty() {
+        // given
+        assert underTest.isEmpty();
+
+        // then
+        assertThrows(IndexOutOfBoundsException.class,
+                () -> underTest.listIterator(0));
+    }
+
+    @Test
+    void canGetNextElementWithListIterator() {
+        // given
+        List<Integer> origValues = List.of(1, 2, 3, 4, 5);
+        origValues.forEach(underTest::add);
+        int n = origValues.size();
+        int startingIndex = 0;
+
+        LinkedListIterator<Integer> underTestIterator =
+                underTest.listIterator(startingIndex);
+        List<Integer> extractedValues = new ArrayList<>();
+        // when
+        for (int i = 0; i < n; i++) {
+            extractedValues.add(underTestIterator.next());
+        }
+
+        // then
+        assertThat(extractedValues).isEqualTo(origValues);
+
+    }
+
+    @Test
+    void canGetPreviousElementWithListIterator() {
+        // given
+        List<Integer> origValues = new ArrayList<>(List.of(1, 2, 3, 4, 5));
+        origValues.forEach(underTest::add);
+        Collections.reverse(origValues);
+        int n = origValues.size();
+        int startIndex = 0;
+
+        LinkedListIterator<Integer> underTestIterator =
+                underTest.listIterator(startIndex);
+        List<Integer> extractedValues = new ArrayList<>();
+        // when
+        for (int i = 0; i < n; i++) {
+            extractedValues.add(underTestIterator.previous());
+        }
+
+        // then
+        assertThat(extractedValues).isEqualTo(origValues);
+    }
+
+    @Test
+    void canCheckIfNextElementExistsWithListIterator() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4, 5);
+        values.forEach(underTest::add);
+        int n = values.size();
+        int startIndex = 0;
+        LinkedListIterator<Integer> underTestIterator =
+                underTest.listIterator(startIndex);
+        // then
+        for (int i = 0; i < n; i++) {
+            assertThat(underTestIterator.hasNext()).isTrue();
+            underTestIterator.next();
+        }
+    }
+
+    @Test
+    void canCheckIfPreviousElementExistsWithListIterator() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4, 5);
+        values.forEach(underTest::add);
+        int n = values.size();
+        int startIndex = 0;
+        LinkedListIterator<Integer> underTestIterator =
+                underTest.listIterator(startIndex);
+        // then
+        for (int i = 0; i < n; i++) {
+            assertThat(underTestIterator.hasPrevious()).isTrue();
+            underTestIterator.previous();
+        }
+    }
+
+    @Test
+    void canIterateContinuouslyWithNextUsingListIterator() {
+        // given
+        List<Integer> origValues = List.of(1, 2, 3, 4, 5);
+        origValues.forEach(underTest::add);
+        int n = origValues.size();
+        int startIndex = 0;
+        LinkedListIterator<Integer> underTestIterator =
+                underTest.listIterator(startIndex);
+        // then
+        for (int i = 0, j = 0; j < (n << 1);j++, i++) {
+            if (i >= n) i = 0;
+            assertThat(underTestIterator.next())
+                    .isEqualTo(origValues.get(i));
+        }
+    }
+
+    @Test
+    void canIterateContinuouslyWithPreviousUsingListIterator() {
+        // given
+        List<Integer> origValues = List.of(1, 2, 3, 4, 5);
+        origValues.forEach(underTest::add);
+        int n = origValues.size();
+        int startIndex = 0;
+        LinkedListIterator<Integer> underTestIterator =
+                underTest.listIterator(startIndex);
+        // then
+        for (int i = (n - 1), j = 0; j < (n << 1);j++, i--) {
+            if (i < 0) i = n - 1;
+            assertThat(underTestIterator.previous())
+                    .isEqualTo(origValues.get(i));
+        }
+    }
+
     @Test
     void canGetSize() {
         // given
         List<Integer> vals = new ArrayList<>(List.of(1, 2, 3, 4, 5));
-        vals.forEach(val -> underTest.add(val));
+        vals.forEach(underTest::add);
         // add values then delete values to check if size method will
         // update as expected
         int numberOfValuesToAdd = 5;
@@ -366,6 +506,88 @@ class MyCircularLinkedListTest {
         assertThat(isEmptyBefore).isTrue();
         assertThat(isNotEmptyAfter).isFalse();
     }
+
+    @Test
+    void canReturnTrueForListsWithIdenticalElements() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4, 5);
+        MyCircularLinkedList<Integer> otherList = new MyCircularLinkedList<>();
+        values.forEach(value -> {
+            underTest.add(value);
+            otherList.add(value);
+        });
+
+        // when
+        boolean isEqual = underTest.equals(otherList);
+
+        // then
+        assertThat(isEqual).isTrue();
+    }
+
+    @Test
+    void canReturnFalseForListsWithNonidenticalElements() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4, 5);
+        List<Integer> otherValues = List.of(1, 2, 4, 3, 5);
+        MyCircularLinkedList<Integer> otherList = new MyCircularLinkedList<>();
+
+        for (int i = 0; i < values.size(); i++) {
+            underTest.add(values.get(i));
+            otherList.add(otherValues.get(i));
+        }
+
+        // when
+        boolean isEqual = underTest.equals(otherList);
+
+        // then
+        assertThat(isEqual).isFalse();
+    }
+
+    @Test
+    void canReturnFalseForListsWithDifferentSizes() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4, 5);
+        List<Integer> otherValues = List.of(1, 2, 3, 4);
+        MyCircularLinkedList<Integer> otherList = new MyCircularLinkedList<>();
+
+        values.forEach(underTest::add);
+        otherValues.forEach(otherList::add);
+
+        // when
+        boolean isEqual = underTest.equals(otherList);
+
+        // then
+        assertThat(isEqual).isFalse();
+    }
+
+    @Test
+    void canToString() {
+        // given
+        List<Integer> values = List.of(1, 2, 3);
+
+        // when
+        String emptyToString = underTest.toString();
+        String expectedEmptyToString = "[]";
+
+        values.forEach(underTest::add);
+        String withElementsToString = underTest.toString();
+        String ExpectedWithElementsToString = "[1, 2, 3]";
+
+        // then
+        assertThat(emptyToString).
+                isEqualTo(expectedEmptyToString);
+
+        assertThat(withElementsToString).
+                isEqualTo(ExpectedWithElementsToString);
+    }
+
+
+    /**
+     * Utility method to move the pointer to ensure that it is
+     * pointing at the correct node after an operation
+     * @param origVals the values to compare linked list to
+     * @param underTest the linked list instance currently being tested
+     */
     private void testPointer(
             List<Integer> origVals,
             LinkedList<Integer> underTest) {
@@ -391,9 +613,15 @@ class MyCircularLinkedListTest {
         // TODO: iterate through entire linked list (implement in future)
     }
 
-    private List<Integer> extractValues(List<Integer> origVals) {
+    /**
+     * Utility method to extract the number of elements in the linked list
+     * into a {@code List} object
+     * @param origValsSize the number of elements to be extracted
+     * @return a {@code List} containing all the extracted elements
+     */
+    private List<Integer> extractValues(int origValsSize) {
         List<Integer> extractedVals = new ArrayList<>();
-        for (int i = 0; i < origVals.size(); i++) {
+        for (int i = 0; i < origValsSize; i++) {
             extractedVals.add(underTest.get(i));
         }
         return extractedVals;
