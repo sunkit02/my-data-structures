@@ -10,6 +10,7 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.in;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -366,7 +367,7 @@ class MyCircularLinkedListTest {
         List<Integer> origValues = List.of(1, 2, 3, 4, 5);
         origValues.forEach(underTest::add);
         int n = origValues.size();
-        int startingIndex = 0;
+        int startingIndex = underTest.size() - 1;
 
         LinkedListIterator<Integer> underTestIterator =
                 underTest.listIterator(startingIndex);
@@ -440,7 +441,7 @@ class MyCircularLinkedListTest {
         List<Integer> origValues = List.of(1, 2, 3, 4, 5);
         origValues.forEach(underTest::add);
         int n = origValues.size();
-        int startIndex = 0;
+        int startIndex = underTest.size() - 1; // to call next at 0
         LinkedListIterator<Integer> underTestIterator =
                 underTest.listIterator(startIndex);
         // then
@@ -466,6 +467,120 @@ class MyCircularLinkedListTest {
             assertThat(underTestIterator.previous())
                     .isEqualTo(origValues.get(i));
         }
+    }
+
+    @Test
+    void canGetNextIndex() {
+        // given
+        List<Integer> values = List.of(1, 2, 3);
+        values.forEach(underTest::add);
+        LinkedListIterator<Integer> underTestIterator =
+                underTest.listIterator(0);
+        int expectedNextIndex = 1;
+
+        // when
+        int nextIndex = underTestIterator.nextIndex();
+
+        // then
+        assertThat(nextIndex).isEqualTo(expectedNextIndex);
+    }
+
+    @Test
+    void canGetPreviousIndex() {
+        // given
+        List<Integer> values = List.of(1, 2, 3);
+        values.forEach(underTest::add);
+        LinkedListIterator<Integer> underTestIterator =
+                underTest.listIterator(2);
+        int expectedPreviousIndex = 1;
+
+        // when
+        int nextIndex = underTestIterator.previousIndex();
+        // then
+        assertThat(nextIndex).isEqualTo(expectedPreviousIndex);
+    }
+
+    @Test
+    void canGetNextIndexInCirculation() {
+        // given
+        List<Integer> values = List.of(1, 2, 3, 4);
+        values.forEach(underTest::add);
+        LinkedListIterator<Integer> underTestIterator =
+                underTest.listIterator(underTest.size() - 1);
+        // then
+        int size = underTest.size();
+        for (int i = 0, j = 0; j < size << 2; i++, j++) {
+            if (i >= size) i = 0;
+            int actual = underTestIterator.nextIndex();
+            underTestIterator.next();
+            assertThat(actual).isEqualTo(i);
+        }
+    }
+
+    @Test
+    void canGetPreviousIndexInCirculation() {
+        // given
+        List<Integer> values = List.of(0, 1, 2, 3, 4);
+        values.forEach(underTest::add);
+        LinkedListIterator<Integer> underTestIterator =
+                underTest.listIterator(0);
+
+        List<Integer> indexes = new ArrayList<>();
+        List<Integer> valuesAtIndex = new ArrayList<>();
+        // when
+        int size = underTest.size();
+        for (int i = 0; i < size << 2; i++) {
+            int index = underTestIterator.previousIndex();
+            Integer valueAtIndex = underTestIterator.previous();
+            assertThat(index).isEqualTo(valueAtIndex);
+            indexes.add(index);
+            valuesAtIndex.add(valueAtIndex);
+        }
+
+        System.out.println("canGetPreviousIndexInCirculation");
+        System.out.println("Indexes：" + indexes);
+        System.out.println("Values : " + valuesAtIndex);
+    }
+
+    @Test
+    void canGetPreviousAndNextAlternating() {
+        // given
+        List<Integer> values = List.of(1, 2, 3);
+        values.forEach(underTest::add);
+        LinkedListIterator<Integer> underTestIterator =
+                underTest.listIterator(0);
+
+        List<Integer> expectedValues = new ArrayList<>();
+        List<Integer> actualValues = new ArrayList<>();
+        // when
+        actualValues.add(underTestIterator.previous());
+        expectedValues.add(3);
+        actualValues.add(underTestIterator.next());
+        expectedValues.add(1);
+        actualValues.add(underTestIterator.next());
+        expectedValues.add(2);
+        actualValues.add(underTestIterator.previous());
+        expectedValues.add(1);
+        actualValues.add(underTestIterator.previous());
+        expectedValues.add(3);
+        actualValues.add(underTestIterator.previous());
+        expectedValues.add(2);
+        actualValues.add(underTestIterator.previous());
+        expectedValues.add(1);
+        actualValues.add(underTestIterator.previous());
+        expectedValues.add(3);
+        actualValues.add(underTestIterator.next());
+        expectedValues.add(1);
+        actualValues.add(underTestIterator.next());
+        expectedValues.add(2);
+        actualValues.add(underTestIterator.next());
+        expectedValues.add(3);
+        actualValues.add(underTestIterator.next());
+        expectedValues.add(1);
+
+        // then
+        assertThat(actualValues).isEqualTo(expectedValues);
+
     }
 
     @Test
@@ -571,14 +686,14 @@ class MyCircularLinkedListTest {
 
         values.forEach(underTest::add);
         String withElementsToString = underTest.toString();
-        String ExpectedWithElementsToString = "[1, 2, 3]";
+        String expectedWithElementsToString = "[1, 2, 3]";
 
         // then
         assertThat(emptyToString).
                 isEqualTo(expectedEmptyToString);
 
         assertThat(withElementsToString).
-                isEqualTo(ExpectedWithElementsToString);
+                isEqualTo(expectedWithElementsToString);
     }
 
 
