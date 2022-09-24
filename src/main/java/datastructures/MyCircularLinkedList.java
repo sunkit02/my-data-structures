@@ -249,15 +249,6 @@ public class MyCircularLinkedList<E> implements LinkedList<E> {
         return str.toString();
     }
 
-    /**
-     * Return node in linked list at the indicated index
-     * @param index index of node
-     * @return node at index
-     */
-    Node<E> node(int index) {
-        return new Node<>(null, null, null);
-    }
-
     private void validateIndex(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException(
@@ -282,19 +273,39 @@ public class MyCircularLinkedList<E> implements LinkedList<E> {
         return true;
     }
 
-    public LinkedListIterator<E> listIterator(int index) {
-        validateIndex(index);
-        return new CircListItr(index);
+    /**
+     * Returns an iterator that directly iterates through the linked list
+     * using the individual nodes and returns the element in the node.
+     * @param initialIndex index of the starting node
+     * @return a {@link LinkedListIterator} that can iterate through the
+     *          entire linked list
+     * @implNote Does not return the starting node when calling
+     *          {@link LinkedListIterator#next()} as the first method but
+     *          returns starting node's next node. Same applies to
+     *          {@link LinkedListIterator#previous()} which returns the node
+     *          previous to the starting node if called first. When referring
+     *          to called as the first method means that a method is being
+     *          called before a state altering method (ex. {@link LinkedListIterator#next()}
+     *          and {@link LinkedListIterator#previous()}) is called. State altering
+     *          is defined as changing the positions of the pointers which
+     *          will result in the change of values being returned.x
+     */
+    public LinkedListIterator<E> listIterator(int initialIndex) {
+        validateIndex(initialIndex);
+        return new CircListItr(initialIndex);
     }
 
     private class CircListItr implements LinkedListIterator<E> {
-        private Node<E> lastReturned;
+        private Node<E> previous;
         private Node<E> next;
-        private int nextIndex;
+        private int currentIndex;
+
 
         private CircListItr(int index) {
-            next = iterateUntil(index);
-            nextIndex = index;
+            Node<E> current = iterateUntil(index);
+            next = current.next;
+            previous = current.prev;
+            currentIndex = index;
         }
 
         @Override
@@ -303,16 +314,27 @@ public class MyCircularLinkedList<E> implements LinkedList<E> {
         }
 
         @Override
-        public E next() {
-            Node<E> current = this.next;
-            this.next = this.next.next;
-            nextIndex++;
-            return current.data;
+        public boolean hasPrevious() {
+            return previous != null;
         }
 
         @Override
-        public boolean hasPrevious() {
-            return next.prev != null;
+        public E next() {
+            Node<E> current = next;
+            next = next.next;
+            previous = current.prev;
+
+            if (next == head.next) {
+                currentIndex = 0;
+            }
+//            else if (currentIndex == size - 1) {
+//                currentIndex = 1;
+//            }
+            else {
+                currentIndex++;
+            }
+
+            return current.data;
         }
 
         /**
@@ -324,20 +346,33 @@ public class MyCircularLinkedList<E> implements LinkedList<E> {
          */
         @Override
         public E previous() {
-            Node<E> previous = next.prev;
-            this.next = this.next.prev;
-            nextIndex--;
-            return previous.data;
+            Node<E> prev = this.previous;
+            next = prev.next;
+            this.previous = this.previous.prev;
+
+            currentIndex--;
+            if (currentIndex < 0) {
+                currentIndex = size - 1;
+            }
+
+            return prev.data;
         }
 
         @Override
         public int nextIndex() {
-            return nextIndex;
+//            // size = 5, size - 1 = 4
+            if (currentIndex == size - 1) {
+                return 0;
+            }
+            return currentIndex + 1;
         }
 
         @Override
         public int previousIndex() {
-            return nextIndex - 1;
+            if (currentIndex == 0) {
+                return size - 1;
+            }
+            return currentIndex - 1;
         }
     }
 
