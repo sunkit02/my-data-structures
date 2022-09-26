@@ -1,4 +1,4 @@
-package algorithms;
+package algorithms.sorting;
 
 /**
  * A middle class for classes from other package to call the
