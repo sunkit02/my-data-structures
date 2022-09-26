@@ -42,22 +42,27 @@ public class MySinglyLinkedList<E> implements LinkedList<E> {
         // fix logic for adding to the head of linked list
         if (index == 0) {
             head = new Node<>(element, head);
-            tail = head;
             this.size++;
-            return;
-        }
+            if (size <= 1) tail = head;
 
-        Node<E> itr = this.head;
-        int i = 0;
-        while (itr != null) {
-            if (i == index - 1) {
-                Node<E> temp = itr.next;
-                itr.next = new Node<>(element, temp);
-                this.size++;
-                return;
+        } else if (index == size) {
+            tail.next = new Node<>(element, null);
+            tail = tail.next;
+            this.size++;
+        }
+        else {
+            Node<E> itr = this.head;
+            int i = 0;
+            while (itr != null) {
+                if (i == index - 1) {
+                    Node<E> temp = itr.next;
+                    itr.next = new Node<>(element, temp);
+                    this.size++;
+                    return;
+                }
+                itr = itr.next;
+                i++;
             }
-            itr = itr.next;
-            i++;
         }
     }
 
