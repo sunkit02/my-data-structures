@@ -369,6 +369,27 @@ class MyDoublyLinkedListTest {
         assertThat(isNotEmptyAfter).isFalse();
     }
 
+    @Test
+    void canToString() {
+        // given
+        List<Integer> values = List.of(1, 2, 3);
+
+        // when
+        String emptyToString = underTest.toString();
+        String expectedEmptyToString = "[]";
+
+        values.forEach(underTest::add);
+        String withElementsToString = underTest.toString();
+        String expectedWithElementsToString = "[1, 2, 3]";
+
+        // then
+        assertThat(emptyToString).
+                isEqualTo(expectedEmptyToString);
+
+        assertThat(withElementsToString).
+                isEqualTo(expectedWithElementsToString);
+    }
+
     private void testPointer(
             List<Integer> origVals,
             MyDoublyLinkedList<Integer> underTest) {
