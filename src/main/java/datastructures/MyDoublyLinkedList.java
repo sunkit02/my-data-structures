@@ -176,14 +176,5 @@ public class MyDoublyLinkedList<E> implements LinkedList<E> {
             this.data = data;
             this.next = next;
         }
-
-        @Override
-        public String toString() {
-            return "Node{" +
-                    "data=" + data +
-                    ", last=" + last +
-                    ", next=" + next +
-                    '}';
-        }
     }
 }
