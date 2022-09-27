@@ -19,7 +19,7 @@ public class MyStack<E> implements Stack<E> {
 
     /**
      * Creates an instance of {@code MyStack} with {@code initialCapacity} of 10
-     * and default {@code minimumCapacity} of 10;
+     * and default {@code minimumCapacity} of 10
      */
     @SuppressWarnings("unchecked")
     public MyStack() {
@@ -29,33 +29,35 @@ public class MyStack<E> implements Stack<E> {
 
     /**
      * Creates an instance of {@code MyStack} with customized {@code initialCapacity}
+     * and the default minimum capacity of 10
      * @param initialCapacity custom {@code initialCapacity} desired
      * @untested
      */
-    @SuppressWarnings("unchecked")
     public MyStack(int initialCapacity) {
-        elementArray = (E[]) new Object[initialCapacity];
-        topIndex = -1;
+        this(initialCapacity, Math.min(initialCapacity, MIN_CAPACITY));
     }
 
     /**
-     * Creates an instance of {@code MyStack} with customized {@code initialCapacity} and {@code minimumCapacity}
+     * Creates an instance of {@code MyStack} with customized {@code initialCapacity} and {@code minCapacity}
      * @param initialCapacity custom {@code initialCapacity} desired
-     * @param minimumCapacity custom {@code minimumCapacity} desired
-     * @throws IllegalArgumentException if {@code initialCapacity} is less than {@code minimumCapacity} or
+     * @param minCapacity custom {@code minCapacity} desired
+     * @throws IllegalArgumentException if {@code initialCapacity} is less than {@code minCapacity} or
      *                                  {@code initialCapacity} is less than 1
      * @untested
      */
     @SuppressWarnings("unchecked")
-    public MyStack(int initialCapacity, int minimumCapacity) {
+    public MyStack(int initialCapacity, int minCapacity) {
         if (initialCapacity < 1) {
-            throw new IllegalArgumentException("Initial capacity must be at least 1");
+            throw new IllegalArgumentException(
+                    "Initial capacity must be at least 1");
         }
-        if (minimumCapacity > initialCapacity) {
-            throw new IllegalArgumentException("Minimum capacity can not be greater than initial capacity");
+        if (minCapacity > initialCapacity) {
+            throw new IllegalArgumentException(
+                    "Minimum capacity must be less than initial capacity");
         }
-        minCapacity = minimumCapacity;
+        this.minCapacity = minCapacity;
         elementArray = (E[]) new Object[initialCapacity];
+        topIndex = -1;
     }
 
     /**
@@ -65,7 +67,7 @@ public class MyStack<E> implements Stack<E> {
     public void push(E element) {
         // check if stack is full
         if (topIndex >= elementArray.length - 1) {
-            copyArray(elementArray.length * 2);
+            changeArrayLength(elementArray.length * 2);
         }
         // push new element
         elementArray[++topIndex] = element;
@@ -139,7 +141,7 @@ public class MyStack<E> implements Stack<E> {
      *           index of 10 and greater will be ignored.
      */
     @SuppressWarnings("unchecked")
-    private void copyArray(int newArrayLength) {
+    private void changeArrayLength(int newArrayLength) {
         // copy stack to an array with new length
         // if new length is less than MIN_CAPACITY of 10 then new length is 10
         newArrayLength = Math.max(newArrayLength, minCapacity);
@@ -163,9 +165,9 @@ public class MyStack<E> implements Stack<E> {
      * if true then trim length of elementArray down to current number of elements * 2
      */
     private void trimElementArray() {
-        int threshold = (topIndex + 1) * 2;
-        if (elementArray.length > threshold) {
-            copyArray(threshold);
+        int threshold = capacity() / 2;
+        if (size() <= threshold) {
+            changeArrayLength(threshold);
         }
     }
 
