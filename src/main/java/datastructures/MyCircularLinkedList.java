@@ -295,12 +295,21 @@ public class MyCircularLinkedList<E> implements LinkedList<E> {
         return new CircListItr(initialIndex);
     }
 
+    /**
+     * Implementation of {@link LinkedListIterator} for the {@link MyCircularLinkedList} class
+     */
     private class CircListItr implements LinkedListIterator<E> {
         private Node<E> previous;
         private Node<E> next;
         private int currentIndex;
 
 
+        /**
+         * Initializes a {@link CircListItr} with the first return element determined
+         * by the {@param index}
+         *
+         * @param index the index to start the iteration of the linked list
+         */
         private CircListItr(int index) {
             Node<E> current = iterateUntil(index);
             next = current.next;
@@ -308,16 +317,31 @@ public class MyCircularLinkedList<E> implements LinkedList<E> {
             currentIndex = index;
         }
 
+        /**
+         * Returns {@code true} if next element is not {@code null}
+         * @return {@code true} if next element is not {@code null} else {@code false}
+         */
         @Override
         public boolean hasNext() {
             return next.next != null;
         }
 
+        /**
+         * Returns {@code true} if previous element is not {@code null}
+         * @return {@code true} if previous element is not {@code null} else {@code false}
+         */
         @Override
         public boolean hasPrevious() {
             return previous != null;
         }
 
+        /**
+         * Returns the next element in the linked list
+         * @return the next element
+         * @implNote initialize the {@link CircListItr} with the index of list size - 1
+         *          for the first element of this method to return to be
+         *          the arbitrary first element in the circular linked list
+         */
         @Override
         public E next() {
             Node<E> current = next;
@@ -327,9 +351,6 @@ public class MyCircularLinkedList<E> implements LinkedList<E> {
             if (next == head.next) {
                 currentIndex = 0;
             }
-//            else if (currentIndex == size - 1) {
-//                currentIndex = 1;
-//            }
             else {
                 currentIndex++;
             }
@@ -358,6 +379,10 @@ public class MyCircularLinkedList<E> implements LinkedList<E> {
             return prev.data;
         }
 
+        /**
+         * Returns the index of the next element in the linked list
+         * @return the index of the next element in the linked list
+         */
         @Override
         public int nextIndex() {
 //            // size = 5, size - 1 = 4
@@ -367,6 +392,10 @@ public class MyCircularLinkedList<E> implements LinkedList<E> {
             return currentIndex + 1;
         }
 
+        /**
+         * Returns the index of the previous element in the linked list
+         * @return the index of the previous element in the linked list
+         */
         @Override
         public int previousIndex() {
             if (currentIndex == 0) {
