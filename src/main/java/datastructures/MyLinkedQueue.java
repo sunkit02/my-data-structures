@@ -24,12 +24,24 @@ public class MyLinkedQueue<E> implements Queue<E> {
     }
 
     @Override
-    public void enqueue(E element) {
+    public void add(E element) {
+        // todo: throw exception if cannot perform operation
+        offer(element);
+    }
+
+    @Override
+    public void offer(E element) {
         linkedList.add(linkedList.size(), element);
     }
 
     @Override
-    public E dequeue() {
+    public E remove() {
+        // todo: throw exception if cannot perform operation
+        return poll();
+    }
+
+    @Override
+    public E poll() {
         if (isEmpty()) {
             throw new RuntimeException("Queue is empty");
         }
@@ -39,7 +51,13 @@ public class MyLinkedQueue<E> implements Queue<E> {
     }
 
     @Override
-    public E first() {
+    public E element() {
+        // todo: throw exception if cannot perform operation
+        return peek();
+    }
+
+    @Override
+    public E peek() {
         return linkedList.get(0);
     }
 
@@ -59,13 +77,13 @@ public class MyLinkedQueue<E> implements Queue<E> {
         for (Object obj : objects) {
             @SuppressWarnings("unchecked")
             E e = (E) obj;
-            enqueue(e);
+            add(e);
         }
     }
 
     public void enqueueAll(E[] array) {
         for (E item : array) {
-            enqueue(item);
+            add(item);
         }
     }
 

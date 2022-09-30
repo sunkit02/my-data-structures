@@ -29,8 +29,8 @@ public class CaesarCipher {
         StringBuilder encodedMsg = new StringBuilder();
         //
         for (char c : msg.toCharArray()) {
-            Integer key = keyQueue.dequeue();
-            keyQueue.enqueue(key);
+            Integer key = keyQueue.poll();
+            keyQueue.offer(key);
             if (Character.isDigit(c)) {
                 encodedMsg.append(c);
             } else if (Character.isLetter(c)) {
@@ -67,8 +67,8 @@ public class CaesarCipher {
         Queue<Integer> keyQueue = new MyLinkedQueue<>(keys);
         StringBuilder decodedMsg = new StringBuilder();
         for (char c : msg.toCharArray()) {
-            Integer key = keyQueue.dequeue();
-            keyQueue.enqueue(key);
+            Integer key = keyQueue.poll();
+            keyQueue.offer(key);
             if (Character.isDigit(c))
                 decodedMsg.append(c);
             else if (Character.isLetter(c)) {
@@ -106,8 +106,8 @@ public class CaesarCipher {
         Queue<Integer> keyQueue = new MyLinkedQueue<>(keys);
         StringBuilder encodedMsg = new StringBuilder();
         for (char c : msg.toCharArray()) {
-            Integer key = keyQueue.dequeue();
-            keyQueue.enqueue(key);
+            Integer key = keyQueue.poll();
+            keyQueue.offer(key);
             int newChar = c + key;
             if (newChar < 0) newChar = 127 + newChar + 1;
             else if (newChar > 127) newChar = newChar - 127 - 1;
@@ -128,8 +128,8 @@ public class CaesarCipher {
         Queue<Integer> keyQueue = new MyLinkedQueue<>(keys);
         StringBuilder decodedMsg = new StringBuilder();
         for (char c : encodedMsg.toCharArray()) {
-            Integer key = keyQueue.dequeue();
-            keyQueue.enqueue(key);
+            Integer key = keyQueue.poll();
+            keyQueue.offer(key);
             int newChar = c - key;
             if (newChar < 0) newChar = 127 + newChar + 1;
             else if (newChar > 127) newChar = newChar + 127 - 1;
