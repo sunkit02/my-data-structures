@@ -1,6 +1,4 @@
-package datastructures;
-
-import datastructures.interfaces.LinkedList;
+package datastructures.linkedlists;
 
 public class MyDoublyLinkedList<E> implements LinkedList<E> {
     private Node<E> head;

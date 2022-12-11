@@ -1,6 +1,4 @@
-package datastructures;
-
-import datastructures.interfaces.Stack;
+package datastructures.stacks;
 
 /**
  * Sun Kit's implementation of a stack using techniques in java.util.ArrayList

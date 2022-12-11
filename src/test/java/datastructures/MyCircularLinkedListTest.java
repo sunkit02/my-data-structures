@@ -1,7 +1,8 @@
 package datastructures;
 
-import datastructures.interfaces.LinkedList;
-import datastructures.interfaces.LinkedListIterator;
+import datastructures.linkedlists.LinkedList;
+import datastructures.linkedlists.LinkedListIterator;
+import datastructures.linkedlists.MyCircularLinkedList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,6 @@ import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 

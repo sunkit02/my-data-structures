@@ -1,6 +1,4 @@
-package datastructures;
-
-import datastructures.interfaces.LinkedList;
+package datastructures.linkedlists;
 
 /**
  * Sun Kit's personal implementation of a singly linked list

@@ -1,4 +1,4 @@
-package datastructures.interfaces;
+package datastructures.linkedlists;
 
 public interface LinkedListIterator<E> {
     boolean hasNext();

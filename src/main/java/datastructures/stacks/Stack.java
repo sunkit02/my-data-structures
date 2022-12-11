@@ -1,4 +1,4 @@
-package datastructures.interfaces;
+package datastructures.stacks;
 
 public interface Stack<E> {
     void push(E element);

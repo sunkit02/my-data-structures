@@ -1,6 +1,4 @@
-package datastructures;
-
-import datastructures.interfaces.Queue;
+package datastructures.queues;
 
 import java.util.Arrays;
 
@@ -13,7 +11,9 @@ public class MyArrayQueue<E> implements Queue<E> {
 
     @SuppressWarnings("unchecked")
     public MyArrayQueue() {
-        head = tail = size = 0;
+        head = 0;
+        tail = 0;
+        size = 0;
         elements = (E[]) new Object[10];
     }
 

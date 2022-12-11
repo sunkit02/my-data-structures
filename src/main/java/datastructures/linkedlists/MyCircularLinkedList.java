@@ -1,7 +1,4 @@
-package datastructures;
-
-import datastructures.interfaces.LinkedListIterator;
-import datastructures.interfaces.LinkedList;
+package datastructures.linkedlists;
 
 /**
  * Sun Kit's implementation of a circular doubly linked list

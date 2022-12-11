@@ -1,7 +1,7 @@
 package projects;
 
-import datastructures.MyLinkedQueue;
-import datastructures.interfaces.Queue;
+import datastructures.queues.MyLinkedQueue;
+import datastructures.queues.Queue;
 
 import java.io.*;
 

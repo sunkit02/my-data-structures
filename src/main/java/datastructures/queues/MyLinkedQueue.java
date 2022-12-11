@@ -1,7 +1,7 @@
-package datastructures;
+package datastructures.queues;
 
-import datastructures.interfaces.LinkedList;
-import datastructures.interfaces.Queue;
+import datastructures.linkedlists.LinkedList;
+import datastructures.linkedlists.MyDoublyLinkedList;
 
 import java.util.Collection;
 

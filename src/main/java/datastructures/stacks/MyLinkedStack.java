@@ -1,6 +1,4 @@
-package datastructures;
-
-import datastructures.interfaces.Stack;
+package datastructures.stacks;
 
 public class MyLinkedStack<E> implements Stack<E> {
 

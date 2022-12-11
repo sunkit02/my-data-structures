@@ -1,6 +1,4 @@
-package datastructures;
-
-import datastructures.interfaces.Stack;
+package datastructures.stacks;
 
 import java.util.Arrays;
 

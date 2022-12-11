@@ -1,7 +1,7 @@
 package projects;
 
-import datastructures.MyLinkedStack;
-import datastructures.interfaces.Stack;
+import datastructures.stacks.MyLinkedStack;
+import datastructures.stacks.Stack;
 
 import java.io.BufferedReader;
 import java.io.IOException;

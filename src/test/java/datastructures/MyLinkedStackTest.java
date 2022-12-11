@@ -1,5 +1,6 @@
 package datastructures;
 
+import datastructures.stacks.MyLinkedStack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

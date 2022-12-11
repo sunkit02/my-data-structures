@@ -1,5 +1,6 @@
 package datastructures;
 
+import datastructures.stacks.MyArrayStack;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
